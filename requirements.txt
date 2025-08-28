@@ -1,0 +1,7 @@
+matplotlib
+jupyter
+pandas>=2.0
+numpy>=1.25
+scikit-learn>=1.3
+xgboost>=1.7
+nba_api>=1.1.10
