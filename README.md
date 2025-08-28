@@ -113,6 +113,6 @@ Se gostou do projeto, deixe uma ⭐ no repositório!
 
 ## 📜 Licença  
 
-Este projeto está licenciado sob os termos da **[Licença MIT (Português)](LICENSE)**.  
+Este projeto está licenciado sob os termos da **[Licença MIT](LICENSE)**.  
 
 Você pode usar, copiar, modificar e distribuir este projeto livremente, desde que mantenha os devidos créditos ao autor.  
