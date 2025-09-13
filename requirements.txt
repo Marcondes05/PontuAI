@@ -1,7 +1,17 @@
-matplotlib
-jupyter
+# Manipulação de dados
 pandas>=2.0
 numpy>=1.25
+
+# Machine Learning
 scikit-learn>=1.3
 xgboost>=1.7
+
+# Coleta de dados NBA
 nba_api>=1.1.10
+
+# Interface Web
+streamlit
+
+# Visualização (opcional, útil no desenvolvimento)
+matplotlib
+
