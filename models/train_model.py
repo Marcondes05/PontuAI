@@ -26,9 +26,13 @@ def train_model(csv_path="data/nba_games.csv"):
     model = XGBClassifier(eval_metric='logloss', random_state=42)
     kf = KFold(n_splits=5, shuffle=True, random_state=42)
     scores = cross_val_score(model, X, y, cv=kf)
-    print(f"🎯 Acurácia média (KFold 5x): {scores.mean()*100:.2f}%")
+    avg_acc = scores.mean()  # média da acurácia
+
+    print(f"🎯 Acurácia média (KFold 5x): {avg_acc*100:.2f}%")
 
     model.fit(X, y)
     with open("models/xgb_model.pkl","wb") as f:
         pickle.dump(model, f)
     print("✅ Modelo salvo em models/xgb_model.pkl")
+
+    return avg_acc
