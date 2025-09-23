@@ -66,8 +66,7 @@ pontuai/
 │  ├─ imagens/                 # Salva os Gráficos           
 │  └─ logos/                   # Logos da NBA e das equipes
 │
-├─ templates/                 # HTML da interface
-│  ├─ base.html               
+├─ templates/                 # HTML da interface             
 │  ├─ index.html              # Pagina principal           
 │  └─ predicitions.html       # Página de predição dos jogos do dia
 │
