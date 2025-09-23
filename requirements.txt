@@ -10,8 +10,13 @@ xgboost>=1.7
 nba_api>=1.1.10
 
 # Interface Web
-streamlit
+flask>=2.3
 
 # Visualização (opcional, útil no desenvolvimento)
 matplotlib
 
+
+#Rodar o projeto
+#pip install -r requirements.txt
+#python -m models.train_model
+#python flask_app.py

@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>PontuAI</title>
+  <title>Previsões do Dia 🏀</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
@@ -13,7 +13,7 @@
     <div class="container-fluid">
       <a class="navbar-brand d-flex align-items-center" href="/">
         <img src="{{ url_for('static', filename='logos/nba.png') }}" alt="NBA" width="50" class="me-2">
-        <span class="fw-bold text-warning">PontuAI </span>
+        <span class="fw-bold text-warning">PontuAI</span>
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
@@ -21,10 +21,10 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Últimos Jogos</a>
+            <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/"> Últimos Jogos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if request.path == '/predictions' %}active{% endif %}" href="/predictions">Previsões do Dia</a>
+            <a class="nav-link {% if request.path == '/predictions' %}active{% endif %}" href="/predictions"> Previsões do Dia</a>
           </li>
         </ul>
       </div>
@@ -33,67 +33,35 @@
 
   <!-- Conteúdo principal -->
   <div class="container my-5">
+    <h2 class="mb-3">📅 Jogos de Hoje</h2>
 
-    <!-- Acurácia -->
-    {% if accuracy %}
-    <div class="accuracy-box text-center text-white fw-bold py-3 mb-4 rounded">
-      🎯 Acurácia atual do modelo: <b>{{ accuracy }}%</b>
-    </div>
-    {% endif %}
-
-    <!-- Gerando previsões do dia -->
-    <div class="text-center my-4">
-      <a href="/predictions" class="btn btn-nba btn-lg">
-        Ver Previsões do Dia
-      </a>
-    </div>
-
-    <!-- Gráficos do treinamento -->
-    <div class="row mb-2">
-      <div class="col-md-6 text-center">
-        <h5>Acurácia por Fold</h5>
-        <img src="{{ url_for('static', filename=training_cv) }}" class="img-fluid rounded shadow">
-        <small class="chart-caption text-muted d-block mt-2">
-          O gráfico mostra a acurácia em cada validação cruzada (K-Fold) e a média geral do modelo.
-        </small>
-      </div>
-      <div class="col-md-6 text-center">
-        <h5>Importância das Variáveis</h5>
-        <img src="{{ url_for('static', filename=feature_imp) }}" class="img-fluid rounded shadow">
-        <small class="chart-caption text-muted d-block mt-2">
-          O gráfico apresenta as variáveis mais relevantes para prever o vencedor dos jogos da NBA.
-        </small>
-      </div>
-    </div>
-
-    <!-- Últimos 10 jogos -->
-    <h2 class="mb-3">📊 Últimos 10 jogos</h2>
+    {% if today_games %}
     <div class="row">
-      {% for game in last_10 %}
+      {% for game in today_games %}
       <div class="col-md-6">
         <div class="game-card">
           <div class="teams">
-            <div class="team {% if game.WINNER == game.HOME_TEAM %}winner{% endif %}">
+            <div class="team">
               <img src="{{ url_for('static', filename=game.HOME_LOGO) }}" alt="{{ game.HOME_TEAM }}">
               <span>{{ game.HOME_TEAM }}</span>
             </div>
             <span class="vs">VS</span>
-            <div class="team {% if game.WINNER == game.AWAY_TEAM %}winner{% endif %}">
+            <div class="team">
               <img src="{{ url_for('static', filename=game.AWAY_LOGO) }}" alt="{{ game.AWAY_TEAM }}">
               <span>{{ game.AWAY_TEAM }}</span>
             </div>
           </div>
           <div class="game-info">
             <p><b>Data:</b> {{ game.GAME_DATE }}</p>
-            <p><b>Vencedor:</b> {{ game.WINNER }}</p>
             <p><b>Predição:</b> {{ game.Predição }}</p>
-            <p><b>Acerto:</b> {% if game.Acerto %}✅{% else %}❌{% endif %}</p>
           </div>
         </div>
       </div>
       {% endfor %}
     </div>
-
+    {% else %}
+    <p class="text-muted">Nenhum jogo encontrado para hoje.</p>
+    {% endif %}
   </div>
 
   <!-- Rodapé -->

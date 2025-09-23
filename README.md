@@ -1,118 +1,146 @@
-# 🏀 NBA Game Prediction AI  
+# 🏀 PontuAI — NBA Game Prediction AI
 
-[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)  
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)  
-[![XGBoost](https://img.shields.io/badge/ML-XGBoost-orange.svg)](https://xgboost.ai/)  
+[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![XGBoost](https://img.shields.io/badge/ML-XGBoost-orange.svg)](https://xgboost.ai/)
+[![Flask](https://img.shields.io/badge/Flask-2.3.2-lightgrey.svg)](https://flask.palletsprojects.com/)
 
-Este projeto tem como objetivo desenvolver um modelo de **Inteligência Artificial** capaz de prever os resultados de partidas da **National Basketball Association (NBA)** com base em estatísticas históricas das equipes.  
-
-O sistema utiliza **Machine Learning** para analisar desempenho esportivo, identificar padrões e gerar previsões sobre partidas futuras.  
-
----
-
-## 📌 Motivação  
-
-O basquete da NBA é altamente competitivo, e prever resultados pode ajudar em análises esportivas, estudos acadêmicos, apostas responsáveis e exploração de técnicas avançadas de **aprendizado de máquina aplicado ao esporte**.  
-
-Este projeto nasceu como uma forma de unir **estatística, programação e paixão pelo basquete**, aplicando técnicas de **ciência de dados** em um cenário real.  
+**PontuAI** é um sistema de **Inteligência Artificial** que prevê resultados de partidas da **NBA** usando estatísticas históricas, com interface web desenvolvida em **Flask** para exibir resultados, acurácia e previsões de forma interativa.
 
 ---
 
-## ⚡ Funcionalidades  
+## 📌 Motivação
 
-- 📊 **Coleta de dados históricos** da NBA via [nba_api](https://github.com/swar/nba_api).  
-- 🧮 **Criação de features** (médias móveis, taxa de vitória, desempenho por temporada).  
-- 🤖 **Treinamento do modelo preditivo** com **XGBoost**.  
-- ✅ **Validação cruzada (KFold 5x)** para avaliação robusta.  
-- 🔮 **Previsões de partidas futuras** da NBA.  
-- 🖥️ **Interface em terminal** para exibição de resultados e acertos.  
+O basquete da NBA é altamente competitivo, e prever resultados ajuda em análises esportivas, estudos acadêmicos e exploração de técnicas de aprendizado de máquina aplicadas ao esporte.
+
+PontuAI une **estatística, programação e paixão pelo basquete**, aplicando **ciência de dados** em um cenário real e acessível via web.
 
 ---
 
-## 🛠️ Tecnologias e Bibliotecas  
+## ⚡ Funcionalidades
 
-- [Python 3.10+](https://www.python.org/)  
-- [Pandas](https://pandas.pydata.org/) – Manipulação de dados  
-- [Scikit-learn](https://scikit-learn.org/) – Pré-processamento e validação  
-- [XGBoost](https://xgboost.ai/) – Modelo de classificação  
-- [Pickle](https://docs.python.org/3/library/pickle.html) – Salvamento do modelo treinado  
-- [nba_api](https://github.com/swar/nba_api) – Coleta de dados  
+* 📊 Coleta e processamento de dados históricos da NBA via [nba\_api](https://github.com/swar/nba_api).
+* 🧮 Criação de features como médias móveis, taxa de vitória e desempenho por temporada.
+* 🤖 Treinamento do modelo preditivo com **XGBoost**.
+* ✅ Validação cruzada (KFold 5x) para avaliação robusta.
+* 🔮 Previsões de partidas futuras da NBA.
+* 🖥️ Interface web com Flask para visualização de resultados, gráficos e acertos.
 
 ---
 
-## 📂 Estrutura do Projeto  
+## 🛠️ Tecnologias e Bibliotecas
+
+* [Python 3.10+](https://www.python.org/)
+* [Flask](https://flask.palletsprojects.com/) – Interface web
+* [Pandas](https://pandas.pydata.org/) – Manipulação de dados
+* [Matplotlib](https://matplotlib.org/) – Visualização de gráficos
+* [Scikit-learn](https://scikit-learn.org/) – Pré-processamento e validação
+* [XGBoost](https://xgboost.ai/) – Modelo de classificação
+* [Pickle](https://docs.python.org/3/library/pickle.html) – Salvamento do modelo
+* [nba\_api](https://github.com/swar/nba_api) – Coleta de dados
+
+---
+
+## 📂 Estrutura do Projeto
 
 ```
-projeto_basquete/
+pontuai/
 │
 ├─ data/
-│  └─ nba_games.csv             # Dados históricos da NBA
+│  └─ nba_games.csv               # Dados históricos
 │
 ├─ database/
-│  ├─ fetch_data.py             # Coleta de dados da NBA
-│  ├─ process_data.py           # Processamento e criação de features
-│  └─ save_data.py              # Script de salvamento
+│  ├─ fetch_data.py               # Coleta de dados
+│  ├─ process_data.py             # Criação de features
+│  └─ save_data.py                # Salvamento
 │
 ├─ models/
-│  ├─ train_model.py            # Treinamento do modelo
-│  ├─ predict.py                # Previsões futuras
-│  ├─ model.pkl                 # Modelo salvo
-│  └─ xgb_model.pkl             # Outra versão do modelo
+│  ├─ train_model.py              # Treinamento do modelo
+│  ├─ predict.py                  # Previsões futuras
+│  ├─ model.pkl                   # Modelo salvo
+│  ├─ xgb_model.pkl               # Outra versão do modelo
+│  └─ accuracy.txt                # Salva a acurácia
+│
+├─ static/
+│  ├─ css/                     # Estilos da página
+│  ├─ imagens/                 # Salva os Gráficos           
+│  └─ logos/                   # Logos da NBA e das equipes
+│
+├─ templates/                 # HTML da interface
+│  ├─ base.html               
+│  ├─ index.html              # Pagina principal           
+│  └─ predicitions.html       # Página de predição dos jogos do dia
 │
 ├─ utils/
-│  └─ helpers.py                # Funções auxiliares
+│  └─ helpers.py                  # Funções auxiliares
 │
-├─ main.py                      # Script principal
-├─ README.md                    # Documentação
-└─ requirements.txt             # Dependências
+├─ app.py
+├─ flask_app.py                   # Inicia servidor Flask│
+├─ main.py                        # Script CLI (opcional)
+├─ LICENSE
+├─ README.md                      # Documentação
+└─ requirements.txt               # Dependências
 ```
 
 ---
 
-## 🚀 Como Usar  
+## 🚀 Como Rodar o Projeto
 
-1. **Clone o repositório**  
+1. **Clone o repositório**
+
 ```bash
 git clone https://github.com/Marcondes05/previsao_nba.git
 cd previsao_nba
 ```
 
-2. **Instale as dependências**  
+2. **Instale as dependências**
+
 ```bash
 pip install -r requirements.txt
 ```
 
-3. **Execute o script principal**  
+3. **Treine o modelo ou use um modelo salvo**
+
 ```bash
-python main.py
+python models/train_model.py
+# Isso cria 'model.pkl' ou 'xgb_model.pkl'
 ```
 
----
+4. **Inicie o servidor Flask**
 
-## 📈 Resultados  
+```bash
+python run.py
+```
 
-- ✅ **Acurácia média:** `67.8%` em validação cruzada.  
-- 🏆 Permite identificar a equipe com maior probabilidade de vitória.  
-
----
-
-## 🔮 Próximos Passos  
-
-- 📌 Explorar novas features (ex.: desempenho por período do jogo).  
-- 📌 Ajustar hiperparâmetros para melhorar a acurácia.  
-- 📌 Criar interface web ou dashboard interativo.  
+5. **Acesse a interface web**
+   Abra no navegador: `http://127.0.0.1:5000`
 
 ---
 
-## 👨‍💻 Autor  
+## 📈 Resultados
 
-Desenvolvido por **[Marcondes05](https://github.com/Marcondes05)** ✨  
-Se gostou do projeto, deixe uma ⭐ no repositório!  
+* ✅ **Acurácia média:** `67.8%` em validação cruzada.
+* 🏆 Identificação da equipe com maior probabilidade de vitória via interface web ou terminal.
 
 ---
 
-## 📜 Licença  
+## 🔮 Próximos Passos
 
-Este projeto está licenciado sob os termos da **[Licença MIT](LICENSE)**.  
+* 📌 Explorar novas features (desempenho por período do jogo).
+* 📌 Ajustar hiperparâmetros para melhorar a acurácia.
+* 📌 Criar dashboards interativos com gráficos em tempo real.
 
-Você pode usar, copiar, modificar e distribuir este projeto livremente, desde que mantenha os devidos créditos ao autor.  
+---
+
+## 👨‍💻 Autor
+
+Desenvolvido por **[Marcondes05](https://github.com/Marcondes05)** ✨
+Se gostou do projeto, deixe uma ⭐ no repositório!
+
+---
+
+## 📜 Licença
+
+Este projeto está licenciado sob **[MIT License](LICENSE)**.
+
+Você pode usar, copiar, modificar e distribuir livremente, desde que mantenha os créditos ao autor.

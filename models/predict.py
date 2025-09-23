@@ -3,27 +3,34 @@ import pickle
 from database.fetch_data import fetch_games
 from database.process_data import process_games
 
+
 def load_model(path="models/xgb_model.pkl"):
     with open(path, "rb") as f:
         return pickle.load(f)
 
+
 def get_pred_side(pred):
     return "HOME" if pred == 1 else "AWAY"
+
+
+def team_to_logo(name: str) -> str:
+    """Transforma nome do time em caminho da logo"""
+    return f"logos/{name.lower().replace(' ', '-')}.png"
+
 
 def show_predictions(return_data=False):
     """
     Mostra ou retorna as previsões.
-    - return_data=False → imprime no terminal (modo atual)
-    - return_data=True  → retorna DataFrames (para Flask ou outros usos)
+    - return_data=False → imprime no terminal
+    - return_data=True  → retorna DataFrames (para Flask)
     """
-    # Carregar modelo
     model = load_model()
 
     # Buscar e processar dados
     raw_data = fetch_games()
     df = process_games(raw_data)
 
-    # Features usadas no modelo
+    # Features usadas
     stats = ["PTS", "REB", "AST", "FG_PCT", "FG3_PCT", "FT_PCT", "PLUS_MINUS"]
     features = []
     for feat in stats:
@@ -32,18 +39,18 @@ def show_predictions(return_data=False):
         features.append(f'DIFF_{feat}')
     features += ["HOME_WINRATE_20", "AWAY_WINRATE_20"]
 
-    # Remover linhas com valores faltantes
     df = df.dropna(subset=features)
 
     # Últimos 10 jogos
     df = df.sort_values("GAME_DATE")
-    last_10 = df.tail(10).copy()
+    last_10 = df.tail(10).copy().sort_values("GAME_DATE", ascending=False)
     X_last10 = last_10[features]
     preds_last10 = model.predict(X_last10)
 
+
     last_10["Predição"] = [get_pred_side(p) for p in preds_last10]
     last_10["Acerto"] = last_10.apply(
-        lambda x: x["WINNER"] == (x["HOME_TEAM"] if x["Predição"] == "HOME" else x["AWAY_TEAM"]),
+        lambda x: x["WINNER"] == (x["HOME_TEAM"] if x["Predição"]=="HOME" else x["AWAY_TEAM"]),
         axis=1
     )
 
@@ -55,7 +62,14 @@ def show_predictions(return_data=False):
         preds_today = model.predict(X_today)
         today_games["Predição"] = [get_pred_side(p) for p in preds_today]
 
-    # Retorno para Flask
+    # Adicionar logos
+    for dfx in [last_10, today_games]:
+        if not dfx.empty:
+            dfx["HOME_LOGO"] = dfx["HOME_TEAM"].apply(team_to_logo)
+            dfx["AWAY_LOGO"] = dfx["AWAY_TEAM"].apply(team_to_logo)
+            if "WINNER" in dfx.columns:
+                dfx["WINNER_LOGO"] = dfx["WINNER"].apply(team_to_logo)
+
     if return_data:
         return last_10, today_games
 
@@ -63,7 +77,7 @@ def show_predictions(return_data=False):
     print("\n=== 10 ÚLTIMOS JOGOS ===")
     for _, row in last_10.iterrows():
         real_winner = row["WINNER"]
-        pred_winner = row["HOME_TEAM"] if row["Predição"] == "HOME" else row["AWAY_TEAM"]
+        pred_winner = row["HOME_TEAM"] if row["Predição"]=="HOME" else row["AWAY_TEAM"]
         print(f"{row['GAME_DATE'].date()} - {row['HOME_TEAM']} X {row['AWAY_TEAM']} - "
               f"Vencedor real: {real_winner} - "
               f"Predição: {pred_winner} - "
@@ -74,5 +88,5 @@ def show_predictions(return_data=False):
     else:
         print("\n=== JOGOS DO DIA ===")
         for _, row in today_games.iterrows():
-            pred_winner = row["HOME_TEAM"] if row["Predição"] == "HOME" else row["AWAY_TEAM"]
+            pred_winner = row["HOME_TEAM"] if row["Predição"]=="HOME" else row["AWAY_TEAM"]
             print(f"{row['GAME_DATE'].date()} - {row['HOME_TEAM']} X {row['AWAY_TEAM']} - Predição: {pred_winner}")
