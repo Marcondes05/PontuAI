@@ -88,8 +88,8 @@ pontuai/
 1. **Clone o repositório**
 
 ```bash
-git clone https://github.com/Marcondes05/previsao_nba.git
-cd previsao_nba
+git clone https://github.com/Marcondes05/PontuAI.git
+cd PontuAI
 ```
 
 2. **Instale as dependências**
