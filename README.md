@@ -88,8 +88,8 @@ pontuai/
 1. **Clone o repositório**
 
 ```bash
-git clone https://github.com/Marcondes05/PontuAI.git
-cd PontuAI
+git clone https://github.com/Marcondes05/previsao_nba.git
+cd previsao_nba
 ```
 
 2. **Instale as dependências**
@@ -108,7 +108,7 @@ python models/train_model.py
 4. **Inicie o servidor Flask**
 
 ```bash
-python run.py
+python flask_app.py
 ```
 
 5. **Acesse a interface web**
@@ -118,7 +118,7 @@ python run.py
 
 ## 📈 Resultados
 
-* ✅ **Acurácia média:** `67.8%` em validação cruzada.
+* ✅ **Acurácia média:** `59.04%` em validação cruzada.
 * 🏆 Identificação da equipe com maior probabilidade de vitória via interface web ou terminal.
 
 ---
